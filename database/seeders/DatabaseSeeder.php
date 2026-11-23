@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::firstOrCreate(
+        User::firstOrCreate(
             ['email' => 'test@example.com'],
             [
                 'name' => 'Test User',
@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         );
 
         Task::firstOrCreate(
-            ['title' => 'Review TSA4 requirements', 'user_id' => $user->id],
+            ['title' => 'Review TSA4 requirements'],
             [
                 'description' => 'Verify public routes, Breeze auth, archiving, and completion email.',
                 'status' => 'pending',
