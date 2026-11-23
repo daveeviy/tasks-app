@@ -2,23 +2,30 @@
 
 namespace Database\Seeders;
 
+use App\Models\Task;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $user = User::firstOrCreate(
+            ['email' => 'test@example.com'],
+            [
+                'name' => 'Test User',
+                'password' => Hash::make('password'),
+            ]
+        );
 
-        $this->call([
-            TaskSeeder::class,
-        ]);
+        Task::firstOrCreate(
+            ['title' => 'Review TSA4 requirements', 'user_id' => $user->id],
+            [
+                'description' => 'Verify public routes, Breeze auth, archiving, and completion email.',
+                'status' => 'pending',
+                'is_archived' => false,
+            ]
+        );
     }
 }
